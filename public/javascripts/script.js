@@ -7,7 +7,7 @@ const addrress = document.querySelector('#address');
 const temperature = document.querySelector('#temperature');
 const summary = document.querySelector('#summary');
 
-messageOne.textContent = 'Loading...';
+messageOne.textContent = '';
 
 weatherForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -16,6 +16,7 @@ weatherForm.addEventListener('submit', (e) => {
 
   fetch(`/weather?address=${searchValue}`)
     .then(response => {
+      messageOne.textContent = 'Loading...';
       response.json()
         .then(data => {
           if (data.error) {
