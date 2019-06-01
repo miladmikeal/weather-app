@@ -1,8 +1,8 @@
 const request = require('request');
-
+require('dotenv/config');
 
 const forecast = (latitude, longitude, callback) => {
-  const url = `https://api.darksky.net/forecast/b3a93dc889aa70f1b0b8d8a18c7cb619/${latitude},${longitude}`;
+  const url = `${process.env.DARK_SKY}${latitude},${longitude}`;
 
   request({ url, json: true }, (error, { body }) => {
     if (error) {

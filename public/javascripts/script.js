@@ -7,7 +7,7 @@ const addrress = document.querySelector('#address');
 const temperature = document.querySelector('#temperature');
 const summary = document.querySelector('#summary');
 
-messageOne.textContent = '';
+messageOne.textContent = 'Loading...';
 
 weatherForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -21,6 +21,7 @@ weatherForm.addEventListener('submit', (e) => {
           if (data.error) {
             messageOne.textContent = data.error;
           } else {
+            messageOne.textContent = '';
             address.textContent = data.location;
             temperature.textContent = `It is currently ${data.temperature} degrees.`;
             summary.textContent = data.summary;
