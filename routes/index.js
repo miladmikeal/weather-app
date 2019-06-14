@@ -7,31 +7,24 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/weather', (req, res) => {
+router.get('/weather', async (req, res) => {
   if (!req.query.address) {
     return res.send({
       error: 'You must provide an address'
     });
   }
-  geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
-    if (error) {
-      return res.send({
-        error
-      });
-    }
-    forecast(latitude, longitude, (error, { temperature, summary }) => {
-      if (error) {
-        return res.send({
-          error
-        });
-      }
-      res.send({
-        location,
-        temperature,
-        summary
-      });
-    });
-  });
-});
+  try {
+    const geoCode = await geocode(req.query.address);
+    const foreCast = await forecast(geoCode.latitude, geoCode.longitude);
+    res.send({
+      location: geoCode.location,
+      temperature: foreCast.temperature,
+      summary: foreCast.summary
+    })
+  } catch (error) {
+    return res.send({ error })
+  }
+})
+
 
 module.exports = router;
